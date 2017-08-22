@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Ajax Demo</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.min.css">
+    </head>
+    <body>
+       
+
+
+        <h1>My Posts</h1>
+
+        <div id="placeholder3">
+            
+        </div>
+
+        
+        <form action="/my_posts/create" method="post" class="ajax_form" id="create_note_form">
+            {% csrf_token %}
+            Add a note: 
+            <textarea rows="5" cols="20" name="note"></textarea>
+            <input type="submit" value="Post It!">
+        </form>
+
+
+        <script>
+            $("#create_note_form").submit(function(e){
+                e.preventDefault()
+                $.ajax({
+                    url:  $(this).attr('action'),
+                    method: 'post',
+                    data: $(this).serialize(),
+                    success: function(serverResponse){
+                        console.log('success', serverResponse)
+                        $('#placeholder3').append(serverResponse)
+                    }
+
+
+                })
+            })
+        </script>
+
+
+
+    </body>
+</html>
